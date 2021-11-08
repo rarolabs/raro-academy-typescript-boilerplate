@@ -20,11 +20,15 @@ export class UserService implements IUserService {
   }
 
   async atualizar(id: number, userDto: UserDTO) {
-    await this.userRepository.save(userDto);
+    await this.userRepository.save({...userDto, id});
   }
 
   async remover(id: number) {
     const userToRemove = await this.userRepository.findOne(id);
+    if (!userToRemove) {
+      throw new Error('User not found!');
+    }
+
     await this.userRepository.remove(userToRemove);
   }
 }
