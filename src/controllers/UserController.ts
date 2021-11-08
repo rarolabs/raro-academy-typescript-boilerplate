@@ -13,17 +13,17 @@ export class UserController {
   }
 
   async get(request: Request, response: Response) {
-    const user = this.userService.buscar(Number(request.params.id));
+    const user = await this.userService.buscar(Number(request.params.id));
     response.send(user);
   }
 
   async create(request: Request, response: Response) {
-    const user = this.userService.criar(request.body);
+    const user = await this.userService.criar(request.body);
     response.send(user);
   }
 
   async update(request: Request, response: Response) {
-    const user = this.userService.atualizar(Number(request.params.id), request.body);
+    const user = await this.userService.atualizar(Number(request.params.id), request.body);
     response.send(user);
   }
 
