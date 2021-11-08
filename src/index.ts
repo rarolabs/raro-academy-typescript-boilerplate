@@ -1,17 +1,19 @@
 import "reflect-metadata";
 import * as dotenv from 'dotenv';
+dotenv.config();
+
 import createApp from './config/app';
 import createDatabaseConnection from "./config/database/connect";
 import createDependencyInjector from "./config/dependencies/createInjector";
-dotenv.config();
+import createServer from "./infra/server/server";
 
 export const start = async () => {
   try {
     await createDatabaseConnection();
     createDependencyInjector();
-    createApp().listen(process.env.PORT);
+    const app = createApp();
 
-    console.log(`Application running on port ${process.env.PORT}`);
+    createServer(app);
   } catch (error) {
     console.error('Fatal error: ', error);
   }
