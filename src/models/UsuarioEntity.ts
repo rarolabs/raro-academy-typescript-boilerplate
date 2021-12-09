@@ -30,10 +30,10 @@ export class Usuario {
   })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   lastName: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   age: number;
 
   @ManyToMany(() => TipoUsuario, (tipoUsuario) => tipoUsuario.usuarios)
