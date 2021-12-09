@@ -1,10 +1,10 @@
 import { UserDTO } from "../dto/UserDto";
-import { User } from "../../models/UserEntity";
+import { Usuario } from "../../models/UsuarioEntity";
 
 export interface IUserService {
-  listar(): Promise<User[]>;
-  buscar(id: number): Promise<User>;
-  criar(usuarioDto: UserDTO): Promise<User>;
+  listar(): Promise<Usuario[]>;
+  buscar(id: number): Promise<Usuario>;
+  criar(usuarioDto: UserDTO): Promise<Usuario>;
   atualizar(id: number, usuarioDto: UserDTO): Promise<void>;
   remover(id: number): Promise<void>;
 }

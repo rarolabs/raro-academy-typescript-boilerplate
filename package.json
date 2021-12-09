@@ -1,7 +1,7 @@
 {
-   "name": "raro-academy-boilerplate",
+   "name": "api_bolao_brasileirao",
    "version": "0.0.1",
-   "description": "Boilerplate para o projeto final da Raro Academy nodejs.",
+   "description": "api_integral_bolao_brasileirao",
    "devDependencies": {
       "@types/axios": "^0.14.0",
       "@types/body-parser": "^1.19.1",
