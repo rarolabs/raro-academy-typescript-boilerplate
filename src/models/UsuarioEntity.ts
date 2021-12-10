@@ -10,7 +10,7 @@ export class Usuario {
     nullable: false,
     unique: true,
   })
-  loguin: string;
+  login: string;
 
   @Column({
     nullable: false,
@@ -22,7 +22,7 @@ export class Usuario {
     nullable: false,
     length: 500,
   })
-  hashsenha: string;
+  hashSenha: string;
 
   @Column({
     nullable: false,
@@ -37,5 +37,5 @@ export class Usuario {
   age: number;
 
   @ManyToMany(() => TipoUsuario, (tipoUsuario) => tipoUsuario.usuarios)
-  tipoUsario: TipoUsuario;
+  tipoUsuario: TipoUsuario;
 }
