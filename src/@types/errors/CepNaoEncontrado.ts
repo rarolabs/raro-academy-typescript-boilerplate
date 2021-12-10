@@ -1,6 +1,6 @@
-import { BaseError } from "./BaseError";
+import { BolaoBaseError } from "./BolaoBaseError";
 
-export class CepNaoEncontrado extends Error implements BaseError {
+export class CepNaoEncontrado extends Error implements BolaoBaseError {
   public name: string;
   constructor() {
     super('CEP não encontrado');
