@@ -1,5 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
-import { TipoUsuario } from "./TipoUsuarioEntity";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
+import { Endereco } from "./EnderecoEntity";
+import { Aposta } from "./ApostaEntity";
+import { Campeonato } from "./CampeonatoEntity";
 
 @Entity()
 export class Usuario {
@@ -8,13 +18,13 @@ export class Usuario {
 
   @Column({
     nullable: false,
-    unique: true,
+    length: 50,
   })
-  login: string;
+  nome: string;
 
   @Column({
-    nullable: false,
     unique: true,
+    length: 50,
   })
   email: string;
 
@@ -26,16 +36,22 @@ export class Usuario {
 
   @Column({
     nullable: false,
-    unique: true,
+    default: true,
   })
-  firstName: string;
+  ativo: boolean;
 
-  @Column({ nullable: false, unique: true })
-  lastName: string;
+  @OneToOne(() => Endereco, (endereco) => endereco.usuario, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  endereco: Endereco;
 
-  @Column({ nullable: false, unique: true })
-  age: number;
+  @OneToMany(() => Aposta, (aposta) => aposta.usuario, { cascade: true })
+  apostas: Aposta[];
 
-  @ManyToMany(() => TipoUsuario, (tipoUsuario) => tipoUsuario.usuarios)
-  tipoUsuario: TipoUsuario;
+  @ManyToMany(() => Campeonato, (campeonato) => campeonato.usuarios, {
+    cascade: true,
+  })
+  @JoinTable()
+  campeonatos: Campeonato[];
 }

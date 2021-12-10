@@ -1,35 +1,55 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Aposta } from "./ApostaEntity";
 import { Rodada } from "./RodadaEntity";
+import { Time } from "./TimeEntity";
 
 @Entity()
 export class Partida {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ nullable: false, unique: true })
-  placar: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    placar: string;
 
-  @Column({ nullable: false, unique: true })
-  mandanteTime: string;
+    @ManyToOne(() => Time, time => time.partidasMandante)
+    mandante: Time;
 
-  @Column({ nullable: false, unique: true })
-  visitanteTime: string;
+    @ManyToOne(() => Time, time => time.partidasVisitante)
+    visitante: Time;
 
-  @Column({ nullable: false, unique: true })
-  placarMandante: string;
+    @Column({ 
+        nullable: true
+    })
+    placarMandante: number;
 
-  @Column({ nullable: false, unique: true })
-  placarVisitante: string;
+    @Column({ 
+        nullable: true
+    })
+    placarVisitante: number;
 
-  @Column({ nullable: false, unique: true })
-  status: number;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    status: string;
 
-  @Column({ nullable: false, unique: true })
-  slug: number;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    slug: string;
 
-  @Column({ nullable: false, unique: true })
-  dataRealizacao: Date;
+    @Column({ 
+        nullable: true 
+    })
+    dataRealizacao: Date;
 
-  @ManyToOne(() => Rodada, (rodada) => rodada.id)
-  rodada: Rodada;
+    @OneToMany(() => Aposta, aposta => aposta.partida)
+    apostas: Aposta[];
+
+    @ManyToOne(() => Rodada, rodada => rodada.partidas)
+    rodada: Rodada;
 }

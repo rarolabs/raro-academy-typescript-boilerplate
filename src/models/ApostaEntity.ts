@@ -1,17 +1,30 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Partida } from "./PartidaEntity";
 import { Usuario } from "./UsuarioEntity";
 
 @Entity()
 export class Aposta {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ nullable: false, unique: true })
-  placarMandante: string;
+    @Column({ 
+        nullable: false 
+    })
+    placarMandante: number;
 
-  @Column({ nullable: false, unique: true })
-  placarVisitante: string;
+    @Column({ 
+        nullable: false 
+    })
+    placarVisitante: number;
 
-  @ManyToMany(() => Usuario, (usuario) => usuario.id)
-  usuario: Usuario;
+    @Column({
+        nullable: true
+    })
+    pontos?: number;
+
+    @ManyToOne(() => Usuario, usuario => usuario.apostas)
+    usuario: Usuario;
+
+    @ManyToOne(() => Partida, partida => partida.apostas)
+    partida: Partida;
 }

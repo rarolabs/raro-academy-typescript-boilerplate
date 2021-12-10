@@ -1,16 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Partida } from "./PartidaEntity";
 
 @Entity()
 export class Time {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, unique: true })
+  @Column({
+    nullable: false,
+    length: 50,
+  })
   nome: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({
+    nullable: false,
+    length: 50,
+  })
   sigla: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({
+    nullable: false,
+    length: 500,
+  })
   escudo: string;
+
+  @OneToMany(() => Partida, (partida) => partida.mandante)
+  partidasMandante: Partida[];
+
+  @OneToMany(() => Partida, (partida) => partida.visitante)
+  partidasVisitante: Partida[];
 }

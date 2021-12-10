@@ -1,30 +1,50 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Rodada } from "./RodadaEntity";
 import { Usuario } from "./UsuarioEntity";
 
 @Entity()
 export class Campeonato {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ nullable: false, unique: true })
-  nome: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    nome: string;
 
-  @Column({ nullable: false, unique: true })
-  slug: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    slug: string;
 
-  @Column({ nullable: false, unique: true })
-  nomePopular: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    nomePopular: string;
 
-  @Column({ nullable: false, unique: true })
-  status: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    status: string;
 
-  @ManyToMany(() => Usuario)
-  @JoinTable()
-  usuarios: Usuario[];
+    @Column({ 
+        nullable: false,
+        length: 500 
+    })
+    logo: string;
+
+    @Column({
+        unique: true
+    })
+    idCampeonatoApiExterna: number;
+
+    @OneToMany(() => Rodada, rodada => rodada.campeonato)
+    rodadas: Rodada[];
+    
+    @ManyToMany(() => Usuario, usuario => usuario.campeonatos)
+    usuarios: Usuario[];
 }

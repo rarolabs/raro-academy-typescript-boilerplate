@@ -1,23 +1,38 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Campeonato } from "./CampeonatoEntity";
 import { Partida } from "./PartidaEntity";
 
 @Entity()
 export class Rodada {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ nullable: false, unique: true })
-  nome: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    nome: string;
 
-  @Column({ nullable: false, unique: true })
-  slug: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    slug: string;
 
-  @Column({ nullable: false, unique: true })
-  rodada: string;
+    @Column({ 
+        nullable: false 
+    })
+    rodada: number;
 
-  @Column({ nullable: false, unique: true })
-  status: string;
+    @Column({ 
+        nullable: false,
+        length: 50 
+    })
+    status: string;
 
-  @OneToMany(() => Partida, (partida) => partida.id)
-  partida: Partida[];
+    @OneToMany(() => Partida, partida => partida.rodada, {cascade: true})
+    partidas: Partida[];
+
+    @ManyToOne(() => Campeonato, campeonato => campeonato.rodadas)
+    campeonato: Campeonato;
 }
