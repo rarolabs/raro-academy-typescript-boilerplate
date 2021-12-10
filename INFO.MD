@@ -17,4 +17,4 @@ Comunicação com banco de dados mariadb. Pode-se utilizar a conexão fornecida 
 Este trabalho deverá ser entregue no github. O link da implementação deverá ser entregue aqui, neste assignment, até a data limite da entrega. O pacote avaliado será o último commit dentro do prazo limitado. Para esta entrega, não haverá critério de decaimento de nota por atraso. Ela precisa ser entregue dentro do prazo.
 
 
-** boilerplate
+
