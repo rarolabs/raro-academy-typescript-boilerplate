@@ -1,6 +1,25 @@
-# Raro Academy Boilerplate
+# Bolão Brasileirao
 
-Boilerplate para a construção do projeto final da turma de nodejs da Raro Academy, edição 1.
+Este projeto é o resultado dos estudos da nossa turma da Raro Academy, edição 1 de nodejs. Ele implementa a API do bolão do campeonato brasileiro, disputa tradicional da Raro, que movimenta toda a torcida dos loucos por futebol.
+
+## tabela de conteúdos
+
+- [Bolão Brasileirao](#bol-o-brasileirao)
+  * [Pré-requisitos](#pr--requisitos)
+  * [Instalação](#instala--o)
+  * [Comandos](#comandos)
+    + [build](#build)
+    + [start](#start)
+    + [dev](#dev)
+    + [test](#test)
+    + [typeorm](#typeorm)
+  * [Pacotes](#pacotes)
+  * [Roadmap](#roadmap)
+  * [Contributing](#contributing)
+  * [License](#license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## Pré-requisitos
 
@@ -12,8 +31,6 @@ Para rodar esta aplicação, você precisará:
 - sugiro um editor de texto que dê bom suporte ao desenvolvimento com typescript.
 
 ## Instalação
-
-> Atenção: Antes de dar qualquer passo da instalação descrita abaixo, sugere-se visitar o arquivo package.json, e alterar as descrições de boilerplate para o seu projeto em específico. Sugere-se também, ao final desta configuração, uma revisão deste próprio readme, apropriando ele para seu projeto em específico.
 
 Os comandos abaixo descrevem a instalação básica do repositório. Se preferir, você pode adotar o clone via https, renomear a pasta raiz, ou o uso do `yarn`, conforme descrito acima.
 
@@ -29,6 +46,8 @@ Atenção ao quarto comando da lista de comandos acima. Nele, você está criand
 - o campo `SECRET`, preencha com uma chave aleatória bem grande. Sugiro uma chave com 256 caracteres, gerada em sites como [este](https://passwordsgenerator.net/).
 - o campo `AUTH_SECRET`, preencha com uma chave aleatória. Sugiro uma chave com 64 caracteres, gerada da mesma forma que a chave anterior.
 > Muita atenção com este arquivo, pois ele não deverá ser versionado, pois ele possui informações sensíveis do projeto.
+
+## Comandos
 
 ### build
 Comando para criação do bundle de produção. Este pacote será produzido na pasta `/dist`, na raiz deste projeto.
@@ -50,12 +69,6 @@ Comando utilizado para iniciar o projeto em modo de desenvolvimento
 ```bash
 npm run dev
 ```
-
-### lint
-Revisa seu código, procurando por possíveis "code smells". Caso encontre algum problema de qualidade, segundo as especificações do nosso lint, ele deverá reportar para você.
-
-### lint:fix
-Revisa seu código, procurando por possíveis "code smells". Caso encontre algum problema de qualidade, segundo as especificações do nosso lint, ele deverá reportar para você. Nesta opção de execução do lint, o script tentará corrigir todos os code smells que possam ser alterados de forma automática.
 
 ### test
 Executa os testes de unidade do projeto. Existem três variações do comando, conforme descritas abaixo:
@@ -87,44 +100,14 @@ Os principais pacotes utilizados nesse projeto são:
 - dotenv
 - jsonwebtoken
 - typeorm
-- typedi
 
 A tecnologia de armazenamento de dados utilizado será o mariadb.
 
-## Estrutura do projeto
-
-Este projeto foi estruturado para trabalhar com as camadas `routers`, `controllers`, `services`, `clients`, `repositories` e `models`. Cada uma destas estruturas conta com uma pasta, dentro de `src`. As comunicações de todas estas camadas devem, ao máximo possível, serem feitas via interfaces, que deverão estar descritas na pasta de `@types`, nas subpastas específicas para cada estrutura (ex.: para repositories, deve-se criar uma interface em `@types/repositories`)
-
-## Criando um novo resource
-Quando você precisar criar um novo resouce (ou seja, um novo conjunto de ações para uma entidade da sua aplicação), será necessário construir todas as camadas de comunicação. Para servir de exemplo, temos um resource de `users`, que deverá consumir um repository de nosso banco de dados, e um de `enderecos`, que deverá consumir um service externo. Vamos utilizar estes dois para descrever o processo de criação de cada um deles.
-
-> importante: Os conceitos de "Resource consumidor de repository" e "Resource consumidor de cliente" são simplificacões, admitidas para descrever melhor a estrutura proposta. Um mesmo serviço, se for necessário, poderá consumir services ou repositories diversos.
-
-### Resource consumidor de repository
-
-1. Criar a entidade. Para detalhes. ex.: `src/models/UserEntity.ts`
-1. Criar a interface do repository. ex.: `src/@types/repositories/IUserRepository.ts`. A princípio, sugiro não se preocupar demais com as operações que a interface deve possuir. Concentre-se, por agora, na estrutura. Os métodos podem ser descritos na interface sob demanda ao repository.
-1. Criar a classe concreta do repository que extenda sua interface. ex.: `src/repositories/UserRepository.ts`
-1. adicionar a construção deste repository no injetor de dependências. ex.: `src/config/dependencies/createInjector.ts`
-1. Criar a interface do service. ex.: `src/@types/services/IUserService.ts`
-1. Criar a classe concreta do service. ex.: `src/services/UserService.ts`. Não se esqueça de declarar esta classe como um `@Service` injetável do typedi.
-1. Importar esta classe no `src/config/dependencies/createInjector.ts`. Isto permitirá o projeto reconhecer que esta dependência é injetável.
-1. Criar a classe de controller. ex.: `src/controllers/UserController.ts`. A princípio, esta classe não demandou injeção, então não me preocupei em criar todo o esquema de abstração dela.
-1. Criar o router deste resource. Ex.: `src/routers/userRouter.ts`
-1. Adicionar o novo router no arquivo de listagem de routers `src/routers/index.ts`
-1. Todas as estruturas estão montadas. Já pode-se escrever as regras de negócios. Possíveis DTOs poderão ser criados em `src/@types/dto`
-
-### Resource consumidor de client
-1. Criar a interface do client. ex.: `src/@types/clients/IEnderecoClient.ts`. A princípio, sugiro não se preocupar demais com as operações que a interface deve possuir. Concentre-se, por agora, na estrutura. Os métodos podem ser descritos na interface sob demanda ao client.
-1. Criar a classe concreta do client que extenda sua interface. ex.: `src/clients/EnderecoClient.ts`. Não se esqueça de declarar esta classe como um `@Service` injetável do typedi.
-1. Importar esta classe no `src/config/dependencies/createInjector.ts`. Isto permitirá o projeto reconhecer que esta dependência é injetável.
-1. Criar a interface do service. ex.: `src/@types/services/IEnderecoService.ts`
-1. Criar a classe concreta do service. ex.: `src/services/EnderecoService.ts`. Não se esqueça de declarar esta classe como um `@Service` injetável do typedi.
-1. Importar esta classe no `src/config/dependencies/createInjector.ts`. Isto permitirá o projeto reconhecer que esta dependência é injetável.
-1. Criar a classe de controller. ex.: `src/controllers/EnderecoController.ts`. A princípio, esta classe não demandou injeção, então não me preocupei em criar todo o esquema de abstração dela.
-1. Criar o router deste resource. Ex.: `src/routers/enderecoRouter.ts`
-1. Adicionar o novo router no arquivo de listagem de routers `src/routers/index.ts`
-1. Todas as estruturas estão montadas. Já pode-se escrever as regras de negócios. Possíveis DTOs poderão ser criados em `src/@types/dto`
+## Roadmap
+- [ ] Criação de usuários
+- [ ] Integração de campeonatos
+- [ ] Criação de apostas
+- [ ] Ranking dos apostadores
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
